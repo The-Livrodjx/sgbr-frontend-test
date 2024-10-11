@@ -1,18 +1,22 @@
 <template>
-  <router-link :to="'/categorias/'">
+  <router-link :to="'/categorias/'" class="tw-absolute tw-top-[6%] tw-left-[15%] tw-zindex-[999]">
     <q-icon
       name="arrow_back"
-      class="tw-ml-8 tw-cursor-pointer tw-p-4 tw-text-lg"
+      class="tw-ml-8 tw-cursor-pointer tw-text-lg"
     />
   </router-link>
   <q-page class="row items-center justify-evenly tw-mt-4">
     <div
-      v-for="post in results"
-      :key="post.id"
-      class="tw-flex tw-flex-wrap tw-justify-center tw-items-center tw-relative tw-gap-[10px]"
+      class="tw-w-[75%] tw-flex tw-flex-wrap tw-items-center tw-justify-center tw-relative"
     >
-      <div class="tw-m-4">
-        <img :src="post.images.fixed_height.url" alt="Gif" />
+      <div
+        v-for="post in results"
+        :key="post.id"
+        class="tw-m-4 tw-max-w-sm tw-bg-white tw-rounded-lg tw-shadow-md tw-transition-all tw-duration-300 tw-ease-in-out hover:tw-transform hover:tw-scale-105"
+      >
+        <div class="tw-m-4">
+          <img :src="post.images.fixed_height.url" alt="Gif" />
+        </div>
       </div>
     </div>
   </q-page>
@@ -35,7 +39,7 @@ const nomeCategoria = computed(() => route.params.nome);
 const fetchCategoryGifs = async () => {
   try {
     const response = await axios.get(
-      `https://api.giphy.com/v1/gifs/search?api_key=A7gVVIXdmh60aBjs6V6V5C104kbb19JU&q=${route.params.nome}&category=${route.params.nome}&limit=10`
+      `https://api.giphy.com/v1/gifs/search?api_key=qlOtgIpI7nwVlSzeqxLb2YI0O3zsUjih&q=${route.params.nome}&category=${route.params.nome}&limit=10`
     );
     results.value = response.data.data;
   } catch (err: any) {

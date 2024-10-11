@@ -1,26 +1,35 @@
 <template>
-  <div>
-    <div v-if="loading">Carregando...</div>
-    <div v-else-if="error">{{ error }}</div>
+  <div class="tw-w-full tw-flex tw-flex-wrap tw-items-center tw-justify-center tw-relative">
+  <div v-if="loading">Carregando...</div>
+  <div v-else-if="error">{{ error }}</div>
+  <div
+    class="tw-w-[75%] tw-flex tw-flex-wrap tw-items-center tw-justify-center tw-relative"
+    v-else
+  >
     <div
-      class="tw-flex tw-flex-wrap tw-items-center tw-justify-center tw-relative"
-      v-else
+      v-for="post in posts" :key="post.id"
+      class="tw-m-4 tw-max-w-sm tw-bg-white tw-rounded-lg tw-shadow-md tw-transition-all tw-duration-300 tw-ease-in-out hover:tw-transform hover:tw-scale-105"
     >
-      <div v-for="post in posts" :key="post.id" class="tw-m-4">
+      <div class="tw-relative tw-h-full">
+        <img
+          :src="post.images.fixed_height.url"
+          class="tw-w-full tw-h-auto tw-object-cover tw-rounded-lg"
+        />
+
         <p
           @click="toggleFavorite(post)"
           :class="{
             'tw-cursor-pointer': !isFavorite(post),
-            'heart-icon': isFavorite(post),
-            'favorite': true
+            'favorite': true,
+            'tw-absolute tw-top-2 tw-right-2 tw-text-red-500 tw-text-xl': true
           }"
         >
-          {{ isFavorite(post) ? "" : "Adicionar aos Favoritos" }}
+          {{ isFavorite(post) ? "❤️" : "🖤" }}
         </p>
-        <img :src="post.images.fixed_height.url" class="tw-max-w-[250px]" />
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -48,7 +57,7 @@ export default {
       this.loading = true;
       try {
         const response = await this.$axios.get(
-          "https://api.giphy.com/v1/gifs/trending?api_key=A7gVVIXdmh60aBjs6V6V5C104kbb19JU&limit=25&offset=0&rating=g&bundle=messaging_non_clips"
+          "https://api.giphy.com/v1/gifs/trending?api_key=qlOtgIpI7nwVlSzeqxLb2YI0O3zsUjih&limit=25&offset=0&rating=g&bundle=messaging_non_clips"
         );
         console.log(response.data.data);
         this.posts = response.data.data;
@@ -84,5 +93,10 @@ export default {
 .heart-icon::after {
   content: "❤️";
   color: red;
+}
+
+.heart-icon::after {
+  content: "🖤";
+  color: black;
 }
 </style>

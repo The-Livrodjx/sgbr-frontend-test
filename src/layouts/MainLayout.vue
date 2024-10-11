@@ -34,12 +34,13 @@
 
       <q-drawer
         v-model="leftDrawerOpen"
-        bordered
         side="left"
         width="250px"
         class="tw-bg-second-custom-blue text-white"
+        style="margin-top: 24%;
+    border-radius: 0rem 2rem 0rem 0rem; border: none !important;"
       >
-        <q-list class="tw-mt-14">
+        <q-list class="tw-mt-14 bg-none">
           <EssentialLink
             v-for="link in linksList"
             :key="link.title"
@@ -66,7 +67,7 @@ import EssentialLink, {
 
 import { watch } from "vue";
 
-const leftDrawerOpen = ref(false);
+const leftDrawerOpen = ref(true);
 
 defineOptions({
   name: "MainLayout",

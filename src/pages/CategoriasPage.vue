@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row items-center justify-center">
+  <q-page>
     <component :is="ShowCategoriesComponent"></component>
   </q-page>
 </template>

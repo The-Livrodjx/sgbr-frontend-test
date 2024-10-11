@@ -4,7 +4,7 @@
       class="tw-flex tw-flex-col tw-w-full tw-items-center tw-justify-center"
     >
       <div
-        class="tw-inline-flex tw-items-center tw-w-full tw-h-[40px] tw-mt-[10px] tw-mx-auto tw-max-w-[1270px] search tw-my-4"
+        class="tw-inline-flex tw-items-center tw-w-full tw-rounded-lg tw-h-[40px] tw-mt-[10px] tw-mx-auto tw-max-w-[1270px] search tw-my-4"
       >
         <q-icon name="search" class="tw-mx-2" />
         <input
@@ -18,19 +18,34 @@
 
       <div
         v-if="results.length > 0"
-        class="tw-flex tw-flex-wrap tw-justify-around tw-items-center tw-relative"
+        class="tw-w-full tw-flex tw-flex-wrap tw-justify-around tw-items-center tw-relative"
       >
-        <div v-for="result in results" :key="result.id">
-          <p
-            @click="toggleFavorite(result)"
-            :class="{
-              'favorite tw-cursor-pointer': !isFavorite(result),
-              'heart-icon': isFavorite(result),
-            }"
+        <div
+          class="tw-w-[75%] tw-flex tw-flex-wrap tw-items-center tw-justify-center tw-relative"
+        >
+          <div
+            v-for="result in results"
+            :key="result.id"
+            class="tw-m-4 tw-max-w-sm tw-bg-white tw-rounded-lg tw-shadow-md tw-transition-all tw-duration-300 tw-ease-in-out hover:tw-transform hover:tw-scale-105"
           >
-            {{ isFavorite(result) ? "" : "Adicionar aos Favoritos" }}
-          </p>
-          <img :src="result.images.fixed_height.url" alt="Gif" />
+            <div class="tw-relative tw-h-full">
+              <p
+                @click="toggleFavorite(result)"
+                :class="{
+                  'tw-cursor-pointer': !isFavorite(result),
+                  'favorite': true,
+                  'tw-absolute tw-top-2 tw-right-2 tw-text-red-500 tw-text-xl': true,
+                }"
+              >
+                {{ isFavorite(result) ? "❤️" : "🖤" }}
+              </p>
+              <img
+                :src="result.images.fixed_height.url"
+                alt="Gif"
+                class="tw-w-full tw-h-auto tw-object-cover tw-rounded-lg"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -58,7 +73,7 @@ const favorites: any = ref([]);
 const fetchGifs = async () => {
   try {
     const response = await axios.get(
-      `https://api.giphy.com/v1/gifs/search?api_key=A7gVVIXdmh60aBjs6V6V5C104kbb19JU&q=${encodeURIComponent(
+      `https://api.giphy.com/v1/gifs/search?api_key=qlOtgIpI7nwVlSzeqxLb2YI0O3zsUjih&q=${encodeURIComponent(
         searchQuery.value
       )}&limit=15&offset=0&rating=g&lang=en&bundle=messaging_non_clips`
     );
@@ -93,5 +108,10 @@ const isFavorite = (result: any) =>
 .heart-icon::after {
   content: "❤️";
   color: red;
+}
+
+.heart-icon::after {
+  content: "🖤";
+  color: black;
 }
 </style>
